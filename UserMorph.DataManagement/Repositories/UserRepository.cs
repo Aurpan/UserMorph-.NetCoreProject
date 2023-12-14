@@ -15,5 +15,16 @@ namespace UserMorph.DataManagement.Repositories
         {
             return _context.Set<User>();
         }
+
+        public User GetUserDetailsByID(int id)
+        {
+            var userDetails = _context.Set<User>()
+                .Where(u => u.Id == id)
+                .Include(u => u.Contacts)
+                .Include(u => u.Roles).FirstOrDefault();
+
+            return userDetails;
+                
+        }
     }
 }

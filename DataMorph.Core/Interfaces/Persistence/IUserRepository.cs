@@ -5,6 +5,7 @@ namespace UserMorph.DataManagement.Repositories
 {
     public interface IUserRepository : IRepository<User, int>
     {
-        IEnumerable<User> GetUsers();
+        IEnumerable<User> GetUsers(); 
+        User GetUserDetailsByID(int id);
     }
 }

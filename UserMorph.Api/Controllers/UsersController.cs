@@ -42,7 +42,7 @@ namespace UserMorph.Api.Controllers
         [HttpGet("{id}")]
         public IActionResult GetUserById(int id) 
         { 
-            var user = users.Find(x => x.Id == id);
+            var user = _service.GetUserDetailsByID(id);
 
             return Ok(user);
         }
