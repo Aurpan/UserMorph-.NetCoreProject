@@ -17,7 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\DataMorph.Core\UserMorph.Core.csproj" />
+    <ProjectReference Include="..\DataMorph.Services\UserMorph.Services.csproj" />
+    <ProjectReference Include="..\UserMorph.DataManagement\UserMorph.DataManagement.csproj" />
   </ItemGroup>
 
 </Project>
