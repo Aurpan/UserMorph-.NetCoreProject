@@ -7,3 +7,5 @@
 /UserMorph.Api/obj
 /DataMorph.Services/obj
 /DataMorph.Core/obj
+/DataMorph.Core/bin/Debug/net6.0
+/DataMorph.Services/bin/Debug/net6.0
