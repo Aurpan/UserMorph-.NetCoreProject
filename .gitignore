@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/UserMorph.Api/.vs/UserMorph.Api
+/UserMorph.Api/bin/Debug/net6.0
+/UserMorph.Api/obj
