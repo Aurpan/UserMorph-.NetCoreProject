@@ -9,3 +9,5 @@
 /DataMorph.Core/obj
 /DataMorph.Core/bin/Debug/net6.0
 /DataMorph.Services/bin/Debug/net6.0
+/UserMorph.DataManagement/bin/Debug/net6.0
+/UserMorph.DataManagement/obj
