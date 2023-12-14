@@ -10,11 +10,11 @@ namespace UserMorph.DataManagement.EntityConfigurations
         {
             builder.HasKey(u => u.Id);
 
-            builder.Property(u => u.FirstName).IsRequired().HasMaxLength(200).IsUnicode(true);
-            builder.Property(u => u.LastName).IsRequired().HasMaxLength(200).IsUnicode(true);
-            builder.Property(u => u.IsActive).IsRequired();
-            builder.Property(u => u.Company).HasMaxLength(200).IsUnicode(true);
-            builder.Property(u => u.Sex).IsRequired();
+            builder.Property(u => u.FirstName).HasMaxLength(200);
+            builder.Property(u => u.LastName).HasMaxLength(200);
+            builder.Property(u => u.IsActive);
+            builder.Property(u => u.Company).IsRequired(false).HasMaxLength(200);
+            builder.Property(u => u.Sex);
 
             builder.HasMany(u => u.Contacts)
                 .WithOne(uc => uc.User);

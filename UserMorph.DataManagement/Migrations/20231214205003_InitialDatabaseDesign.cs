@@ -32,7 +32,7 @@ namespace UserMorph.DataManagement.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    Company = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Company = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Sex = table.Column<byte>(type: "tinyint", nullable: false)
                 },
                 constraints: table =>
@@ -41,7 +41,7 @@ namespace UserMorph.DataManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserRole",
+                name: "RoleUser",
                 columns: table => new
                 {
                     RolesId = table.Column<int>(type: "int", nullable: false),
@@ -49,15 +49,15 @@ namespace UserMorph.DataManagement.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserRole", x => new { x.RolesId, x.UsersId });
+                    table.PrimaryKey("PK_RoleUser", x => new { x.RolesId, x.UsersId });
                     table.ForeignKey(
-                        name: "FK_UserRole_Role_RolesId",
+                        name: "FK_RoleUser_Role_RolesId",
                         column: x => x.RolesId,
                         principalTable: "Role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserRole_User_UsersId",
+                        name: "FK_RoleUser_User_UsersId",
                         column: x => x.UsersId,
                         principalTable: "User",
                         principalColumn: "Id",
@@ -88,8 +88,8 @@ namespace UserMorph.DataManagement.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserRole_UsersId",
-                table: "UserRole",
+                name: "IX_RoleUser_UsersId",
+                table: "RoleUser",
                 column: "UsersId");
 
             migrationBuilder.CreateIndex(
@@ -102,7 +102,7 @@ namespace UserMorph.DataManagement.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UserRole");
+                name: "RoleUser");
 
             migrationBuilder.DropTable(
                 name: "UserContact");

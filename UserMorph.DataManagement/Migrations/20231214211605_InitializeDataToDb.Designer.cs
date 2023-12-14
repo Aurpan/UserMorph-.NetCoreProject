@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UserMorph.DataManagement.Contexts;
 
@@ -10,9 +11,11 @@ using UserMorph.DataManagement.Contexts;
 namespace UserMorph.DataManagement.Migrations
 {
     [DbContext(typeof(UserMorphDbContext))]
-    partial class UserMorphDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231214211605_InitializeDataToDb")]
+    partial class InitializeDataToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -24,6 +24,9 @@ namespace UserMorph.DataManagement.Contexts
                 .ApplyConfiguration(new UserConfiguration())
                 .ApplyConfiguration(new RoleConfiguration());
 
+            base.OnModelCreating(modelBuilder);
+            new DbInitializer(modelBuilder).Seed();
+
         }
 
         

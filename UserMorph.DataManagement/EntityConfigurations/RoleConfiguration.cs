@@ -10,7 +10,7 @@ namespace UserMorph.DataManagement.EntityConfigurations
         {
             builder.HasKey(r => r.Id);
 
-            builder.Property(r => r.Name).IsRequired().HasMaxLength(200);
+            builder.Property(r => r.Name).HasMaxLength(200);
 
             builder.HasMany(ur => ur.Users);
         }

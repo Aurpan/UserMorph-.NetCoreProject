@@ -11,7 +11,7 @@ using UserMorph.DataManagement.Contexts;
 namespace UserMorph.DataManagement.Migrations
 {
     [DbContext(typeof(UserMorphDbContext))]
-    [Migration("20231214195036_InitialDatabaseDesign")]
+    [Migration("20231214205003_InitialDatabaseDesign")]
     partial class InitialDatabaseDesign
     {
         /// <inheritdoc />
@@ -66,15 +66,12 @@ namespace UserMorph.DataManagement.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Company")
-                        .IsRequired()
                         .HasMaxLength(200)
-                        .IsUnicode(true)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .IsUnicode(true)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<bool>("IsActive")
@@ -83,7 +80,6 @@ namespace UserMorph.DataManagement.Migrations
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .IsUnicode(true)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<byte>("Sex")

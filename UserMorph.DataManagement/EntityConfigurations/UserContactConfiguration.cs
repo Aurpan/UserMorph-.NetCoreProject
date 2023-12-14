@@ -8,10 +8,10 @@ namespace UserMorph.DataManagement.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<UserContact> builder)
         {
-            builder.Property(uc => uc.Phone).IsRequired().HasMaxLength(20);
-            builder.Property(uc => uc.Address).IsRequired().HasMaxLength(200).IsUnicode(true);
-            builder.Property(uc => uc.City).IsRequired().HasMaxLength(200).IsUnicode(true);
-            builder.Property(uc => uc.Country).IsRequired().HasMaxLength(200).IsUnicode(true);
+            builder.Property(uc => uc.Phone).HasMaxLength(20);
+            builder.Property(uc => uc.Address).HasMaxLength(200);
+            builder.Property(uc => uc.City).HasMaxLength(200);
+            builder.Property(uc => uc.Country).HasMaxLength(200);
 
             builder.HasKey(uc => uc.Id);
 
