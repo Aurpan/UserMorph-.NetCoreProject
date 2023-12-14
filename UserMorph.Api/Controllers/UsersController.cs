@@ -1,6 +1,7 @@
 ﻿using UserMorph.Core.DTOs.DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using UserMorph.Services;
+using UserMorph.Core.Interfaces.Domain;
 
 namespace UserMorph.Api.Controllers
 {
