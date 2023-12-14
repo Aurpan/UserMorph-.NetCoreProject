@@ -1,4 +1,4 @@
-﻿namespace DataMorph.Core.Enums
+﻿namespace UserMorph.Core.Enums
 {
     public enum Gender : byte
     {

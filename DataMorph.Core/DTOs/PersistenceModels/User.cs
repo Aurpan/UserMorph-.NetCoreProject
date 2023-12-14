@@ -1,6 +1,6 @@
-﻿using DataMorph.Core.Enums;
+﻿using UserMorph.Core.Enums;
 
-namespace DataMorph.Core.DTOs.PersistenceModels
+namespace UserMorph.Core.DTOs.PersistenceModels
 {
     public class User
     {
@@ -10,5 +10,9 @@ namespace DataMorph.Core.DTOs.PersistenceModels
         public bool IsActive { get; set; }
         public string Company { get; set; }
         public Gender Sex { get; set; }
+
+        public List<UserContact> Contacts { get; set; }
+        public List<Role> Roles { get; set; }
+
     }
 }

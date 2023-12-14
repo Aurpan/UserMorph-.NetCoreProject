@@ -1,4 +1,4 @@
-﻿namespace DataMorph.Core.DTOs.DomainModels
+﻿namespace UserMorph.Core.DTOs.DomainModels
 {
     public class UserContact
     {

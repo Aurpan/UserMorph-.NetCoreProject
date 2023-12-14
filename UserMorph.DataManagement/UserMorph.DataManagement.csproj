@@ -15,4 +15,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DataMorph.Core\UserMorph.Core.csproj" />
+  </ItemGroup>
+
 </Project>
