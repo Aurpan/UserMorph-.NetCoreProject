@@ -62,8 +62,8 @@ namespace UserMorph.Services
                     }),
                     Roles = source.Roles.Select(r => new Role
                     {
-                        Id = r.Id,
-                        Name = r.Name,
+                        UserId = r.UserId,
+                        RoleId = r.RoleId,
                     })
                 };
             }

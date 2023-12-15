@@ -5,24 +5,11 @@
 namespace UserMorph.DataManagement.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDatabaseDesign : Migration
+    public partial class InitialDatabaseAndTableCreation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Role",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Role", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
@@ -38,30 +25,6 @@ namespace UserMorph.DataManagement.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RoleUser",
-                columns: table => new
-                {
-                    RolesId = table.Column<int>(type: "int", nullable: false),
-                    UsersId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoleUser", x => new { x.RolesId, x.UsersId });
-                    table.ForeignKey(
-                        name: "FK_RoleUser_Role_RolesId",
-                        column: x => x.RolesId,
-                        principalTable: "Role",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RoleUser_User_UsersId",
-                        column: x => x.UsersId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,14 +50,32 @@ namespace UserMorph.DataManagement.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_RoleUser_UsersId",
-                table: "RoleUser",
-                column: "UsersId");
+            migrationBuilder.CreateTable(
+                name: "UsersRole",
+                columns: table => new
+                {
+                    RoleId = table.Column<byte>(type: "tinyint", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UsersRole", x => new { x.RoleId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_UsersRole_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserContact_UserId",
                 table: "UserContact",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UsersRole_UserId",
+                table: "UsersRole",
                 column: "UserId");
         }
 
@@ -102,13 +83,10 @@ namespace UserMorph.DataManagement.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "RoleUser");
-
-            migrationBuilder.DropTable(
                 name: "UserContact");
 
             migrationBuilder.DropTable(
-                name: "Role");
+                name: "UsersRole");
 
             migrationBuilder.DropTable(
                 name: "User");

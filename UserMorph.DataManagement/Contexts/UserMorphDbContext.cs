@@ -13,7 +13,7 @@ namespace UserMorph.DataManagement.Contexts
 
 
         public DbSet<User> User { get; set; }
-        public DbSet<Role> Role { get; set; }
+        public DbSet<UsersRole> UsersRole { get; set; }
         public DbSet<UserContact> UserContact { get; set; }
 
 

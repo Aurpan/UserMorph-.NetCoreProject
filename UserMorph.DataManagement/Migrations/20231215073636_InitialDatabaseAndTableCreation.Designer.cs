@@ -11,8 +11,8 @@ using UserMorph.DataManagement.Contexts;
 namespace UserMorph.DataManagement.Migrations
 {
     [DbContext(typeof(UserMorphDbContext))]
-    [Migration("20231214205003_InitialDatabaseDesign")]
-    partial class InitialDatabaseDesign
+    [Migration("20231215073636_InitialDatabaseAndTableCreation")]
+    partial class InitialDatabaseAndTableCreation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,39 +23,6 @@ namespace UserMorph.DataManagement.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("RoleUser", b =>
-                {
-                    b.Property<int>("RolesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RolesId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("RoleUser");
-                });
-
-            modelBuilder.Entity("UserMorph.Core.DTOs.PersistenceModels.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Role");
-                });
 
             modelBuilder.Entity("UserMorph.Core.DTOs.PersistenceModels.User", b =>
                 {
@@ -124,19 +91,19 @@ namespace UserMorph.DataManagement.Migrations
                     b.ToTable("UserContact");
                 });
 
-            modelBuilder.Entity("RoleUser", b =>
+            modelBuilder.Entity("UserMorph.Core.DTOs.PersistenceModels.UsersRole", b =>
                 {
-                    b.HasOne("UserMorph.Core.DTOs.PersistenceModels.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<byte>("RoleId")
+                        .HasColumnType("tinyint");
 
-                    b.HasOne("UserMorph.Core.DTOs.PersistenceModels.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RoleId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UsersRole");
                 });
 
             modelBuilder.Entity("UserMorph.Core.DTOs.PersistenceModels.UserContact", b =>
@@ -150,9 +117,22 @@ namespace UserMorph.DataManagement.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("UserMorph.Core.DTOs.PersistenceModels.UsersRole", b =>
+                {
+                    b.HasOne("UserMorph.Core.DTOs.PersistenceModels.User", "User")
+                        .WithMany("Roles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("UserMorph.Core.DTOs.PersistenceModels.User", b =>
                 {
                     b.Navigation("Contacts");
+
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

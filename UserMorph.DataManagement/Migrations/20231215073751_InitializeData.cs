@@ -7,23 +7,11 @@
 namespace UserMorph.DataManagement.Migrations
 {
     /// <inheritdoc />
-    public partial class InitializeDataToDb : Migration
+    public partial class InitializeData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.InsertData(
-                table: "Role",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 1, "Manager" },
-                    { 2, "HR" },
-                    { 3, "Lead" },
-                    { 4, "Admin" },
-                    { 5, "Staff" }
-                });
-
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "Id", "Company", "FirstName", "IsActive", "LastName", "Sex" },
@@ -45,37 +33,24 @@ namespace UserMorph.DataManagement.Migrations
                     { 4, "Banani", "Dhaka", "BD", "01652937539", 2 },
                     { 5, "Oxyzen", "Ctg", "BD", "01557992233", 3 }
                 });
+
+            migrationBuilder.InsertData(
+                table: "UsersRole",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { (byte)0, 1 },
+                    { (byte)0, 2 },
+                    { (byte)1, 1 },
+                    { (byte)2, 2 },
+                    { (byte)3, 3 }
+                });
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(
-                table: "Role",
-                keyColumn: "Id",
-                keyValue: 1);
-
-            migrationBuilder.DeleteData(
-                table: "Role",
-                keyColumn: "Id",
-                keyValue: 2);
-
-            migrationBuilder.DeleteData(
-                table: "Role",
-                keyColumn: "Id",
-                keyValue: 3);
-
-            migrationBuilder.DeleteData(
-                table: "Role",
-                keyColumn: "Id",
-                keyValue: 4);
-
-            migrationBuilder.DeleteData(
-                table: "Role",
-                keyColumn: "Id",
-                keyValue: 5);
-
-            migrationBuilder.DeleteData(
                 table: "UserContact",
                 keyColumn: "Id",
                 keyValue: 1);
@@ -99,6 +74,31 @@ namespace UserMorph.DataManagement.Migrations
                 table: "UserContact",
                 keyColumn: "Id",
                 keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "UsersRole",
+                keyColumns: new[] { "RoleId", "UserId" },
+                keyValues: new object[] { (byte)0, 1 });
+
+            migrationBuilder.DeleteData(
+                table: "UsersRole",
+                keyColumns: new[] { "RoleId", "UserId" },
+                keyValues: new object[] { (byte)0, 2 });
+
+            migrationBuilder.DeleteData(
+                table: "UsersRole",
+                keyColumns: new[] { "RoleId", "UserId" },
+                keyValues: new object[] { (byte)1, 1 });
+
+            migrationBuilder.DeleteData(
+                table: "UsersRole",
+                keyColumns: new[] { "RoleId", "UserId" },
+                keyValues: new object[] { (byte)2, 2 });
+
+            migrationBuilder.DeleteData(
+                table: "UsersRole",
+                keyColumns: new[] { "RoleId", "UserId" },
+                keyValues: new object[] { (byte)3, 3 });
 
             migrationBuilder.DeleteData(
                 table: "User",

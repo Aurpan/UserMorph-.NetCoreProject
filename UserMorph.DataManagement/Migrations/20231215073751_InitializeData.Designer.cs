@@ -11,8 +11,8 @@ using UserMorph.DataManagement.Contexts;
 namespace UserMorph.DataManagement.Migrations
 {
     [DbContext(typeof(UserMorphDbContext))]
-    [Migration("20231214211605_InitializeDataToDb")]
-    partial class InitializeDataToDb
+    [Migration("20231215073751_InitializeData")]
+    partial class InitializeData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,66 +23,6 @@ namespace UserMorph.DataManagement.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("RoleUser", b =>
-                {
-                    b.Property<int>("RolesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RolesId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("RoleUser");
-                });
-
-            modelBuilder.Entity("UserMorph.Core.DTOs.PersistenceModels.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Role");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Manager"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "HR"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Lead"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Admin"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Staff"
-                        });
-                });
 
             modelBuilder.Entity("UserMorph.Core.DTOs.PersistenceModels.User", b =>
                 {
@@ -227,19 +167,46 @@ namespace UserMorph.DataManagement.Migrations
                         });
                 });
 
-            modelBuilder.Entity("RoleUser", b =>
+            modelBuilder.Entity("UserMorph.Core.DTOs.PersistenceModels.UsersRole", b =>
                 {
-                    b.HasOne("UserMorph.Core.DTOs.PersistenceModels.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<byte>("RoleId")
+                        .HasColumnType("tinyint");
 
-                    b.HasOne("UserMorph.Core.DTOs.PersistenceModels.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RoleId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UsersRole");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = (byte)0,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            RoleId = (byte)1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            RoleId = (byte)0,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            RoleId = (byte)2,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            RoleId = (byte)3,
+                            UserId = 3
+                        });
                 });
 
             modelBuilder.Entity("UserMorph.Core.DTOs.PersistenceModels.UserContact", b =>
@@ -253,9 +220,22 @@ namespace UserMorph.DataManagement.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("UserMorph.Core.DTOs.PersistenceModels.UsersRole", b =>
+                {
+                    b.HasOne("UserMorph.Core.DTOs.PersistenceModels.User", "User")
+                        .WithMany("Roles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("UserMorph.Core.DTOs.PersistenceModels.User", b =>
                 {
                     b.Navigation("Contacts");
+
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

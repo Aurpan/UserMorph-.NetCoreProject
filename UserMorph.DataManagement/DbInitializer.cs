@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UserMorph.Core.DTOs.PersistenceModels;
+using UserMorph.Core.Enums;
 
 namespace UserMorph.DataManagement
 {
@@ -14,18 +15,7 @@ namespace UserMorph.DataManagement
 
         public void Seed()
         {
-            // Role Data
-            _modelBuilder.Entity<Role>()
-                .HasData(
-                    new Role { Id = 1, Name = "Manager" },
-                    new Role { Id = 2, Name = "HR" },
-                    new Role { Id = 3, Name = "Lead" },
-                    new Role { Id = 4, Name = "Admin" },
-                    new Role { Id = 5, Name = "Staff" }
-                );
-
-
-
+            // User Data
             _modelBuilder.Entity<User>()
                 .HasData(
                     new User
@@ -58,6 +48,7 @@ namespace UserMorph.DataManagement
                 );
 
 
+            // UserContact Data
             _modelBuilder.Entity<UserContact>()
                 .HasData(
                     new UserContact
@@ -105,6 +96,18 @@ namespace UserMorph.DataManagement
                         City = "Ctg",
                         Country = "BD"
                     }
+                );
+
+
+
+            // Role Data
+            _modelBuilder.Entity<UsersRole>()
+                .HasData(
+                    new UsersRole { UserId = 1, RoleId = UserRole.Manager },
+                    new UsersRole { UserId = 1, RoleId = UserRole.Admin },
+                    new UsersRole { UserId = 2, RoleId = UserRole.Manager },
+                    new UsersRole { UserId = 2, RoleId = UserRole.Lead },
+                    new UsersRole { UserId = 3, RoleId = UserRole.Staff }
                 );
         }
     }

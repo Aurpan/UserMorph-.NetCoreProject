@@ -12,7 +12,7 @@ namespace UserMorph.Core.DTOs.PersistenceModels
         public Gender Sex { get; set; }
 
         public List<UserContact> Contacts { get; set; }
-        public List<Role> Roles { get; set; }
+        public List<UsersRole> Roles { get; set; }
 
     }
 }
