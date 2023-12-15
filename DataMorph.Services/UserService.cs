@@ -1,5 +1,4 @@
-﻿using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using UserMorph.Core.DTOs.DomainModels;
+﻿using UserMorph.Core.DTOs.DomainModels;
 using UserMorph.Core.Interfaces.Domain;
 using UserMorph.DataManagement.Repositories;
 
@@ -35,11 +34,11 @@ namespace UserMorph.Services
         {
             var userPersistence = _userRepository.GetUserDetailsByID(id);
 
-            return MapPersistenceUserToDomainUser(userPersistence);
+            return MapPersistenceUserToDomainUserWithDetails(userPersistence);
         }
 
-
-        private User MapPersistenceUserToDomainUser(Core.DTOs.PersistenceModels.User source)
+         
+        private User MapPersistenceUserToDomainUserWithDetails(Core.DTOs.PersistenceModels.User source)
         {
             if (source != null)
             {
@@ -64,6 +63,7 @@ namespace UserMorph.Services
                     {
                         UserId = r.UserId,
                         RoleId = r.RoleId,
+                        Name = r.RoleId.ToString()
                     })
                 };
             }
