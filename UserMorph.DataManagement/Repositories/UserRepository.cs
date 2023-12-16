@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UserMorph.DataManagement.Repositories
 {
-    public class UserRepository : Repository<User, int>, IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly DbContext _context;
-        public UserRepository(DbContext dbContext) : base(dbContext)
+        public UserRepository(DbContext dbContext)
         {
             _context = dbContext;
         }

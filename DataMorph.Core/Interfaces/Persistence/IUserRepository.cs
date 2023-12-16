@@ -3,7 +3,7 @@ using UserMorph.Core.Interfaces.Persistence;
 
 namespace UserMorph.DataManagement.Repositories
 {
-    public interface IUserRepository : IRepository<User, int>
+    public interface IUserRepository
     {
         IEnumerable<User> GetUsers(); 
         User GetUserDetailsByID(int id);

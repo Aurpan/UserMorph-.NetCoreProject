@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "firstName": "Parvez",
+    "lastName": "Mahmud",
+    "isActive": true,
+    "company": "DSi",
+    "sex": "Male",
+    "contacts": [
+      {
+        "id": 1,
+        "userId": 1,
+        "phone": "01667002233",
+        "address": "Mirpur",
+        "city": "Dhaka",
+        "country": "BD"
+      },
+      {
+        "id": 2,
+        "userId": 1,
+        "phone": "01767002233",
+        "address": "Rampura",
+        "city": "Dhaka",
+        "country": "BD"
+      }
+    ],
+    "roles": [
+      {
+        "roleId": 0,
+        "userId": 1
+      },
+      {
+        "roleId": 1,
+        "userId": 1
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "firstName": "Md",
+    "lastName": "Imran",
+    "isActive": true,
+    "company": "Therap BD",
+    "sex": "Male",
+    "contacts": [
+      {
+        "id": 1,
+        "userId": 1,
+        "phone": "01667157233",
+        "address": "Wari",
+        "city": "Dhaka",
+        "country": "BD"
+      },
+      {
+        "id": 2,
+        "userId": 1,
+        "phone": "01767007943",
+        "address": "Mohakhali",
+        "city": "Dhaka",
+        "country": "BD"
+      }
+    ],
+    "roles": [
+      {
+        "roleId": 2,
+        "userId": 1
+      },
+      {
+        "roleId": 1,
+        "userId": 1
+      }
+    ]
+  }
+]
