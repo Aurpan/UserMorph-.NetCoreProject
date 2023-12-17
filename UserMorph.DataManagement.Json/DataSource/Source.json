@@ -27,11 +27,13 @@
     "roles": [
       {
         "roleId": 0,
-        "userId": 1
+        "userId": 1,
+        "name": "Manager"
       },
       {
         "roleId": 1,
-        "userId": 1
+        "userId": 1,
+        "name": "Admin"
       }
     ]
   },
@@ -63,11 +65,13 @@
     "roles": [
       {
         "roleId": 2,
-        "userId": 1
+        "userId": 1,
+        "name": "Lead"
       },
       {
         "roleId": 1,
-        "userId": 1
+        "userId": 1,
+        "name": "Admin"
       }
     ]
   }

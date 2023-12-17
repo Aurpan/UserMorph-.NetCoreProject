@@ -1,5 +1,6 @@
 ﻿using UserMorph.Core.DTOs.PersistenceModels;
 using Microsoft.EntityFrameworkCore;
+using UserMorph.Core.Interfaces.Persistence;
 
 namespace UserMorph.DataManagement.Repositories
 {

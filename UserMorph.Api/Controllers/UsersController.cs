@@ -1,7 +1,8 @@
 ﻿using UserMorph.Core.DTOs.DomainModels;
 using Microsoft.AspNetCore.Mvc;
-using UserMorph.Services;
 using UserMorph.Core.Interfaces.Domain;
+using System.ComponentModel.DataAnnotations;
+using FluentValidation;
 
 namespace UserMorph.Api.Controllers
 {
@@ -25,10 +26,12 @@ namespace UserMorph.Api.Controllers
         };
 
         private readonly IUserService _service;
+        private readonly IValidator<User> _userValidator;
 
-        public UsersController(IUserService service)
+        public UsersController(IUserService service, IValidator<User> userValidator)
         {
             _service = service;
+            _userValidator = userValidator;
         }
 
         [HttpGet]
@@ -49,9 +52,8 @@ namespace UserMorph.Api.Controllers
 
         [HttpPost]
         public IActionResult CreateUser(User user) 
-        { 
-            user.Id = users.Count() + 1;
-            users.Add(user);
+        {
+            var result = _userValidator.Validate(user);
 
             return CreatedAtAction(nameof(GetUserById), "Users", new { id = user.Id }, null);
         }

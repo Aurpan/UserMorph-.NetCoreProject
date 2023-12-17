@@ -6,5 +6,6 @@ namespace UserMorph.Core.Interfaces.Domain
     {
         IEnumerable<User> GetUsers();
         User GetUserDetailsByID(int id);
+        
     }
 }
