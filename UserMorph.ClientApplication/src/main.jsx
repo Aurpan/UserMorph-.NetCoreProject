@@ -2,9 +2,33 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import UserDetails from './components/UserDetails.jsx'
+import UserList from './components/UserList.jsx'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    children: [
+      {
+        path: '',
+        element: <UserList />
+      },
+      {
+        path: '/users',
+        element: <UserList />
+      },
+      {
+        path: '/users/edit/:userId',
+        element: <UserDetails />
+      }
+    ]
+  }
+]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
-    <App />
+  <RouterProvider router={router} />
   // </React.StrictMode>,
 )
