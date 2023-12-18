@@ -1,30 +1,39 @@
-import {Link} from 'react-router-dom'
-
-const users = [
-    {
-        id: 1,
-        name: 'imran vai',
-        company: 'DSI',
-        sex: 'Male'
-    },
-    {
-        id: 2,
-        name: 'imran jamai 1',
-        company: 'DSI',
-        sex: 'Female'
-    },
-    {
-        id: 3,
-        name: 'imran jami 2',
-        company: 'DSI',
-        sex: 'Male'
-    }
-];
+import { Link, useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import axios from '../Axios';
 
 export default function () {
+    let [users, setUsers] = useState([]);
+    let [dataProvider, setDataProvider] = useState(0);
+    const { pathname } = useLocation();
+    const editUrl = ['/users', '/users/'].includes(pathname) ? '' : 'users/';
+
+    const changeDataSource = (event) => {
+        const newSource = parseInt(event.target.value);
+        setDataProvider(newSource);
+    };
+
+    useEffect(() => {
+        fetchUsers(dataProvider);
+    }, [dataProvider]);
+
+    const fetchUsers = (dataProvider) => {
+        console.log('dataSource: ', dataProvider);
+        axios.get(`/users?dataSourceType=${dataProvider}`).then(response => {
+            console.log('data: ', response.data);
+            setUsers(response.data);
+        });
+    }
+
     return (
         <div className="user-list-container">
-            <table className="table">
+            <div className='ds-selector'>
+                <select onChange={changeDataSource} value={dataProvider}>
+                    <option value={0}>MS SQL Server</option>
+                    <option value={1}>Json DB</option>
+                </select>
+            </div>
+            <table className="table table-responsive table-bordered">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -36,15 +45,14 @@ export default function () {
                 </thead>
                 <tbody>
                     {
-                        users.map(user => 
+                        users.map(user =>
                             <tr key={user.id}>
                                 <td scope="row">{user.id}</td>
-                                <td>{user.name}</td>
+                                <td>{`${user.firstName} ${user.lastName}`}</td>
                                 <td>{user.company}</td>
                                 <td>{user.sex}</td>
                                 <td>
-                                    <Link to={`users/edit/${user.id}`}>Edit</Link>
-                                    {/* <button className="btn btn-outline-primary">Edit</button> */}
+                                    <Link to={`${editUrl}edit/${user.id}?dataSourceType=${dataProvider}`}>Edit</Link>
                                 </td>
                             </tr>
                         )

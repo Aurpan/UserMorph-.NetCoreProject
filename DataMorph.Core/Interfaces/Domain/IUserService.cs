@@ -7,6 +7,10 @@ namespace UserMorph.Core.Interfaces.Domain
     {
         IEnumerable<User> GetUsers(DataSourceType sourceType);
         User GetUserDetailsById(int id, DataSourceType sourceType);
-        
+        void UpdateUser(User user);
+        void CreateUser(User user);
+        void DeleteUser(int userId);
+
+
     }
 }

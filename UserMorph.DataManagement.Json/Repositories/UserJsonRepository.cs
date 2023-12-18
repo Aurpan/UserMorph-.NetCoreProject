@@ -5,7 +5,7 @@ using UserMorph.Core.Interfaces.Persistence;
 
 namespace UserMorph.DataManagement.Repositories
 {
-    public class UserJsonRepository: IUserJsonRepository, IRepository
+    public class UserJsonRepository: IRepository, IUserJsonRepository
     {
         private readonly string filePath = "../UserMorph.DataManagement.Json/DataSource/Source.json";
 
@@ -18,6 +18,27 @@ namespace UserMorph.DataManagement.Repositories
         public User GetUserDetailsByID(int id)
         {
             return GetUsersFromJson().FirstOrDefault(u => u.Id == id);
+        }
+
+        public void UpdateUser(List<User> users)
+        {
+            var userJson = JsonConvert.SerializeObject(users);
+
+            WriteToJsonDataSource(userJson);
+        }
+
+        public void CreateUser(List<User> users)
+        {
+            var userJson = JsonConvert.SerializeObject(users);
+
+            WriteToJsonDataSource(userJson);
+        }
+
+        public void DeleteUser(List<User> users)
+        {
+            var userJson = JsonConvert.SerializeObject(users);
+
+            WriteToJsonDataSource(userJson);
         }
 
 

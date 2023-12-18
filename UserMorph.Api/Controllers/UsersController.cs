@@ -12,21 +12,6 @@ namespace UserMorph.Api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        static List<User> users = new List<User>()
-        {
-            new User
-            {
-                Id = 1,
-                FirstName = "Aurpan"
-            },
-            new User
-            {
-                Id = 2,
-                FirstName = "Darshan"
-            }
-
-        };
-
         private readonly IUserService _service;
         private readonly IValidator<User> _userValidator;
 
@@ -55,12 +40,14 @@ namespace UserMorph.Api.Controllers
         [HttpPost]
         public IActionResult CreateUser(User user) 
         {
-            var validationResult = _userValidator.Validate(user);
+            //var validationResult = _userValidator.Validate(user);
 
-            if (validationResult.IsValid)
-            {
+            //if (validationResult.IsValid)
+            //{
 
-            }
+            //}
+
+            _service.CreateUser(user);
 
             return CreatedAtAction(nameof(GetUserById), "Users", new { id = user.Id }, null);
         }
@@ -68,19 +55,15 @@ namespace UserMorph.Api.Controllers
         [HttpPut]
         public IActionResult UpdateUser(User user) 
         {
-            var domainUser = users.Find(x => x.Id == user.Id);
-
-            domainUser.FirstName = user.FirstName;
+            _service.UpdateUser(user);  
 
             return NoContent();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteUser(int id) 
         {
-            var userIndex = users.FindIndex(x => x.Id == id);
-
-            users.RemoveAt(userIndex);
+            _service.DeleteUser(id);
 
             return NoContent();
         }
