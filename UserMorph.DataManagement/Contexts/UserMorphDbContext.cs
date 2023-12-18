@@ -7,9 +7,7 @@ namespace UserMorph.DataManagement.Contexts
     public class UserMorphDbContext : DbContext
     {
         public UserMorphDbContext(DbContextOptions<UserMorphDbContext> options): base(options) 
-        {
-
-        }
+        {}
 
 
         public DbSet<User> User { get; set; }

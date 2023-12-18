@@ -4,7 +4,7 @@ using UserMorph.Core.Interfaces.Persistence;
 
 namespace UserMorph.DataManagement.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : IRepository
     {
         private readonly DbContext _context;
         public UserRepository(DbContext dbContext)

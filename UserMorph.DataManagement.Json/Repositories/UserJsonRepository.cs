@@ -1,22 +1,42 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using UserMorph.Core.DTOs.PersistenceModels;
 using UserMorph.Core.Interfaces.Persistence;
 
 namespace UserMorph.DataManagement.Repositories
 {
-    public class UserJsonRepository: IUserJsonRepository
+    public class UserJsonRepository: IUserJsonRepository, IRepository
     {
         private readonly string filePath = "../UserMorph.DataManagement.Json/DataSource/Source.json";
-        public string ReadUsersJson()
-        {
-            var json = File.ReadAllText(filePath);
-            //var jObject = JObject.Parse(json);
 
-            return json;
+
+        public IEnumerable<User> GetUsers()
+        {
+            return GetUsersFromJson();
         }
 
-        public string SaveUsersJson()
+        public User GetUserDetailsByID(int id)
         {
-            throw new NotImplementedException();
+            return GetUsersFromJson().FirstOrDefault(u => u.Id == id);
         }
+
+
+
+        #region Private Methods
+
+        private IEnumerable<User> GetUsersFromJson()
+        {
+            string usersJson = File.ReadAllText(filePath);
+
+            return JsonConvert.DeserializeObject<IEnumerable<User>>(usersJson);
+        }
+
+        private void WriteToJsonDataSource(string userJson)
+        {
+            File.WriteAllText(filePath, userJson);
+        }
+
+        #endregion
+    
     }
 }

@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\UserMorph.DataManagement.Json\UserMorph.DataManagement.Json.csproj" />
     <ProjectReference Include="..\UserMorph.DataManagement\UserMorph.DataManagement.csproj" />
   </ItemGroup>
 

@@ -1,8 +1,7 @@
-﻿namespace UserMorph.Core.Interfaces.Persistence
+﻿using UserMorph.Core.DTOs.PersistenceModels;
+namespace UserMorph.Core.Interfaces.Persistence
 {
     public interface IUserJsonRepository
     {
-        string ReadUsersJson();
-        string SaveUsersJson();
     }
 }

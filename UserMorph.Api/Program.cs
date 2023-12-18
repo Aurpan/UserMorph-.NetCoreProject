@@ -24,9 +24,8 @@ namespace UserMorph.Api
                 options.UseSqlServer("Server=localhost;Database=UserMorphDB;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
             });
 
+            builder.Services.AddScoped<UserRepositoryFactory>();
             builder.Services.AddScoped<DbContext, UserMorphDbContext>();
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<IUserJsonRepository, UserJsonRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
 
 
