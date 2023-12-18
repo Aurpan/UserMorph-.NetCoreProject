@@ -39,7 +39,19 @@ namespace UserMorph.Api
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("cors-policy", policyBuilder =>
+                {
+                    policyBuilder
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowAnyOrigin();
+                });
+            });
+
             var app = builder.Build();
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -52,8 +64,9 @@ namespace UserMorph.Api
 
             app.UseAuthorization();
 
-
             app.MapControllers();
+
+            app.UseCors("cors-policy");
 
             app.Run();
         }
