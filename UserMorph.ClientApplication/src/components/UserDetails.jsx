@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "../Axios";
 
 export default function () {
+    const navigate = useNavigate();
     const [userData, setUserData] = useState(null);
     const { userId } = useParams();
     const { search } = useLocation();
@@ -54,12 +55,15 @@ export default function () {
     }
 
     const deleteUser = () => {
+        
+
         axios.delete(`/users/${userData.id}`).then(() => {
             console.log('delete success');
+            navigate('/users');
         })
-            .catch(err => {
-                console.log('failed to delete');
-            })
+        .catch(err => {
+            console.log('failed to delete');
+        })
     }
 
     if (!userData) {
@@ -70,10 +74,15 @@ export default function () {
         <>
             <div className="row">
                 <div className="col-md-6">
+                    <Link style={{width: 'fit-content'}} className="btn btn-outline-warning" to='/users'>Back to user list</Link>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-md-6">
                     <h1>User Details</h1>
 
                     <div className="mb-2">
-                        <label for="fname" class="form-label">First Name</label>
+                        <label htmlFor="fname" className="form-label">First Name</label>
                         <input
                             id="fname"
                             className="form-control form-control-sm"
@@ -84,7 +93,7 @@ export default function () {
                     </div>
 
                     <div className="mb-2">
-                        <label for="lname" class="form-label">Last Name</label>
+                        <label htmlFor="lname" className="form-label">Last Name</label>
                         <input
                             id="lname"
                             className="form-control form-control-sm"
@@ -95,7 +104,7 @@ export default function () {
                     </div>
 
                     <div className="mb-2">
-                        <label for="company" class="form-label">Company</label>
+                        <label htmlFor="company" className="form-label">Company</label>
                         <input
                             id="company"
                             type="text"
@@ -106,7 +115,7 @@ export default function () {
                     </div>
 
                     <div className="mb-2">
-                        <label for="sex" class="form-label">Sex</label>
+                        <label htmlFor="sex" className="form-label">Sex</label>
                         <select
                             id="sex"
                             value={userData.sex}

@@ -13,12 +13,24 @@ namespace UserMorph.Services
             _repositoryFactory = repositoryFactory;
         }
 
-        public IEnumerable<User> GetUsers(DataSourceType sourceType)
-        {    
-            return _repositoryFactory.GetUserRepository(sourceType)
-                .GetUsers()
-                .Select(MapToUserDomainModel)
+        public IEnumerable<User> GetUsers(DataSourceType sourceType, string searchText)
+        {
+            var userQuery = _repositoryFactory.GetUserRepository(sourceType)
+                .GetUsers();
+
+            if (!string.IsNullOrEmpty(searchText) && searchText != "all")
+            {
+                userQuery = userQuery
+                    .Where(u => 
+                        u.FirstName.Contains(searchText, StringComparison.OrdinalIgnoreCase) 
+                        || u.LastName.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+                    );
+            }
+
+            var filteredResult = userQuery.Select(MapToUserDomainModel)
                 .ToList();
+
+            return filteredResult;
         } 
 
 

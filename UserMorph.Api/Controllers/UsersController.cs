@@ -22,9 +22,9 @@ namespace UserMorph.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetUsers(DataSourceType dataSourceType) 
+        public IActionResult GetUsers(DataSourceType dataSourceType, string searchText) 
         {
-            var userList = _service.GetUsers(dataSourceType).ToList();
+            var userList = _service.GetUsers(dataSourceType, searchText).ToList();
 
             return Ok(userList);
         }

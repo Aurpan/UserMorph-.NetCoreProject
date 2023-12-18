@@ -4,6 +4,7 @@ import axios from '../Axios';
 
 export default function () {
     let [users, setUsers] = useState([]);
+    let [searchText, setSearchText] = useState('');
     let [dataProvider, setDataProvider] = useState(0);
     const { pathname } = useLocation();
     const editUrl = ['/users', '/users/'].includes(pathname) ? '' : 'users/';
@@ -14,25 +15,46 @@ export default function () {
     };
 
     useEffect(() => {
-        fetchUsers(dataProvider);
-    }, [dataProvider]);
+        fetchUsers();
+    }, [dataProvider, searchText]);
 
-    const fetchUsers = (dataProvider) => {
-        console.log('dataSource: ', dataProvider);
-        axios.get(`/users?dataSourceType=${dataProvider}`).then(response => {
-            console.log('data: ', response.data);
-            setUsers(response.data);
-        });
+    const fetchUsers = () => {
+        console.log('dataSource: ', dataProvider, searchText);
+        axios.get(`/users?dataSourceType=${dataProvider}&searchText=${Boolean(searchText) ? searchText : 'all'}`)
+            .then(response => {
+                console.log('data: ', response.data);
+                setUsers(response.data);
+            });
     }
 
     return (
         <div className="user-list-container">
-            <div className='ds-selector'>
-                <select onChange={changeDataSource} value={dataProvider}>
-                    <option value={0}>MS SQL Server</option>
-                    <option value={1}>Json DB</option>
-                </select>
+            <div className='row'>
+                <div className='col'>
+                    <div className='ds-selector mb-3'>
+                        <select
+                            onChange={changeDataSource} value={dataProvider}
+                            className='form-select-sm'
+                        >
+                            <option value={0}>MS SQL Server</option>
+                            <option value={1}>Json DB</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div className='col-md-5'>
+                    <div>
+                        <input
+                            type='text'
+                            placeholder='search users...'
+                            className='form-control'
+                            value={searchText}
+                            onChange={e => setSearchText(e.target.value.trim())}
+                        />
+                    </div>
+                </div>
             </div>
+
             <table className="table table-responsive table-bordered">
                 <thead>
                     <tr>
