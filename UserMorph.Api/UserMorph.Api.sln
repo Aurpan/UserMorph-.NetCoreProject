@@ -3,19 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserMorph.Api", "UserMorph.Api.csproj", "{657A926D-139D-4566-9EC3-76E07E5773E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserMorph.Api", "UserMorph.Api.csproj", "{657A926D-139D-4566-9EC3-76E07E5773E3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{5821E038-AD5C-426D-819B-303E85393ADB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserMorph.Services", "..\DataMorph.Services\UserMorph.Services.csproj", "{8DDA163B-2892-4578-A308-D872F6DDFB17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserMorph.Services", "..\DataMorph.Services\UserMorph.Services.csproj", "{8DDA163B-2892-4578-A308-D872F6DDFB17}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{3FB5E6F4-42B2-48BA-AAAF-2F5D210E64CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserMorph.Core", "..\DataMorph.Core\UserMorph.Core.csproj", "{C68B1F5F-BF3A-4F6D-8315-23C404A4526D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserMorph.Core", "..\DataMorph.Core\UserMorph.Core.csproj", "{C68B1F5F-BF3A-4F6D-8315-23C404A4526D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Access", "Data Access", "{76DFC6A3-1AE8-44F2-8A0E-BF976A957C0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserMorph.DataManagement", "..\UserMorph.DataManagement\UserMorph.DataManagement.csproj", "{4E90611D-1119-4D7B-8108-16BDE20A1C03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserMorph.DataManagement", "..\UserMorph.DataManagement\UserMorph.DataManagement.csproj", "{4E90611D-1119-4D7B-8108-16BDE20A1C03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserMorph.DataManagement.Json", "..\UserMorph.DataManagement.Json\UserMorph.DataManagement.Json.csproj", "{D7FA1D2E-C63F-4063-8905-B70C0F079629}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{4E90611D-1119-4D7B-8108-16BDE20A1C03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E90611D-1119-4D7B-8108-16BDE20A1C03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E90611D-1119-4D7B-8108-16BDE20A1C03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7FA1D2E-C63F-4063-8905-B70C0F079629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7FA1D2E-C63F-4063-8905-B70C0F079629}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7FA1D2E-C63F-4063-8905-B70C0F079629}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7FA1D2E-C63F-4063-8905-B70C0F079629}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,6 +53,7 @@ Global
 		{8DDA163B-2892-4578-A308-D872F6DDFB17} = {5821E038-AD5C-426D-819B-303E85393ADB}
 		{C68B1F5F-BF3A-4F6D-8315-23C404A4526D} = {3FB5E6F4-42B2-48BA-AAAF-2F5D210E64CC}
 		{4E90611D-1119-4D7B-8108-16BDE20A1C03} = {76DFC6A3-1AE8-44F2-8A0E-BF976A957C0D}
+		{D7FA1D2E-C63F-4063-8905-B70C0F079629} = {76DFC6A3-1AE8-44F2-8A0E-BF976A957C0D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {31B42B83-DA9F-4A8B-95CC-5171F0F138AC}

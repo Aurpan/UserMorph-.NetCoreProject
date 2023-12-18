@@ -1,15 +1,10 @@
-﻿using System.Linq.Expressions;
+﻿using UserMorph.Core.DTOs.PersistenceModels;
 
 namespace UserMorph.Core.Interfaces.Persistence
 {
-    public interface IRepository<TEntity, TKey> where TEntity : class
+    public interface IRepository
     {
-        IEnumerable<TEntity> GetAll();
-
-        TEntity Get(TKey key);
-
-        //bool Any(Expression<Func<TEntity, bool>> expression);
-
-        //void SaveChanges();
+        IEnumerable<User> GetUsers();
+        User GetUserDetailsByID(int id);
     }
 }

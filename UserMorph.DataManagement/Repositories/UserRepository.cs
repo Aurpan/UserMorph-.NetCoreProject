@@ -1,12 +1,13 @@
 ﻿using UserMorph.Core.DTOs.PersistenceModels;
 using Microsoft.EntityFrameworkCore;
+using UserMorph.Core.Interfaces.Persistence;
 
 namespace UserMorph.DataManagement.Repositories
 {
-    public class UserRepository : Repository<User, int>, IUserRepository
+    public class UserRepository : IRepository
     {
         private readonly DbContext _context;
-        public UserRepository(DbContext dbContext) : base(dbContext)
+        public UserRepository(DbContext dbContext)
         {
             _context = dbContext;
         }

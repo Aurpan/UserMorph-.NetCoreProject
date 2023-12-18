@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.14">
@@ -19,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DataMorph.Core\UserMorph.Core.csproj" />
     <ProjectReference Include="..\DataMorph.Services\UserMorph.Services.csproj" />
+    <ProjectReference Include="..\UserMorph.DataManagement.Json\UserMorph.DataManagement.Json.csproj" />
     <ProjectReference Include="..\UserMorph.DataManagement\UserMorph.DataManagement.csproj" />
   </ItemGroup>
 

@@ -1,5 +1,9 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using UserMorph.Core.DTOs.DomainModels;
 using UserMorph.Core.Interfaces.Domain;
+using UserMorph.Core.Interfaces.Persistence;
+using UserMorph.Core.Validators;
 using UserMorph.DataManagement.Contexts;
 using UserMorph.DataManagement.Repositories;
 using UserMorph.Services;
@@ -20,9 +24,15 @@ namespace UserMorph.Api
                 options.UseSqlServer("Server=localhost;Database=UserMorphDB;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
             });
 
+            builder.Services.AddScoped<UserRepositoryFactory>();
             builder.Services.AddScoped<DbContext, UserMorphDbContext>();
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
+
+
+            // Validators 
+            builder.Services.AddScoped<IValidator<User>, UserValidator>();
+
+
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
