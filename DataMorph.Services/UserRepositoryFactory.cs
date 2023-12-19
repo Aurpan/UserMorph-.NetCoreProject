@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using UserMorph.Core.Enums;
 using UserMorph.Core.Interfaces.Persistence;
-using UserMorph.DataManagement.Contexts;
 using UserMorph.DataManagement.Repositories;
 
 namespace UserMorph.Services

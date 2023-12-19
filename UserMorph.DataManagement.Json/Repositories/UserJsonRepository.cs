@@ -5,26 +5,34 @@ using UserMorph.Core.Interfaces.Persistence;
 
 namespace UserMorph.DataManagement.Repositories
 {
-    public class UserJsonRepository: IUserJsonRepository, IRepository
+    public class UserJsonRepository: IRepository, IUserJsonRepository
     {
         private readonly string filePath = "../UserMorph.DataManagement.Json/DataSource/Source.json";
 
 
-        public IEnumerable<User> GetUsers()
+        public IEnumerable<User>? GetUsers()
         {
             return GetUsersFromJson();
         }
 
-        public User GetUserDetailsByID(int id)
+        public User? GetUserDetailsByID(int id)
         {
-            return GetUsersFromJson().FirstOrDefault(u => u.Id == id);
+            return GetUsersFromJson()?.FirstOrDefault(u => u.Id == id);
         }
+
+        public void UpdateJsonDb(List<User> users)
+        {
+            var userJson = JsonConvert.SerializeObject(users);
+
+            WriteToJsonDataSource(userJson);
+        }
+
 
 
 
         #region Private Methods
 
-        private IEnumerable<User> GetUsersFromJson()
+        private IEnumerable<User>? GetUsersFromJson()
         {
             string usersJson = File.ReadAllText(filePath);
 

@@ -1,10 +1,10 @@
-﻿
-using UserMorph.Core.DTOs.DomainModels;
+﻿using UserMorph.Core.DTOs.DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using UserMorph.Core.Interfaces.Domain;
-using System.ComponentModel.DataAnnotations;
 using FluentValidation;
 using UserMorph.Core.Enums;
+using UserMorph.Core.ApplicationExceptions;
+using UserMorph.Api.Responses;
 
 namespace UserMorph.Api.Controllers
 {
@@ -12,21 +12,6 @@ namespace UserMorph.Api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        static List<User> users = new List<User>()
-        {
-            new User
-            {
-                Id = 1,
-                FirstName = "Aurpan"
-            },
-            new User
-            {
-                Id = 2,
-                FirstName = "Darshan"
-            }
-
-        };
-
         private readonly IUserService _service;
         private readonly IValidator<User> _userValidator;
 
@@ -37,19 +22,38 @@ namespace UserMorph.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetUsers(DataSourceType dataSourceType) 
+        public IActionResult GetUsers(DataSourceType dataSourceType, string searchText = "~") 
         {
-            var userList = _service.GetUsers(dataSourceType).ToList();
+            var userList = _service.GetUsers(dataSourceType, searchText).ToList();
+            var response = new ApiResponse<List<User>>()
+            {
+                IsSuccess = true,
+                Data = userList,
+                StatusCode = StatusCodes.Status200OK
+            };
 
-            return Ok(userList);
+            return Ok(response);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetUserById(int id, DataSourceType dataSourceType) 
-        { 
-            var user = _service.GetUserDetailsById(id, dataSourceType);
+        {
+            var response = new ApiResponse<User>();
+            try
+            {
+                var user = _service.GetUserDetailsById(id, dataSourceType);
 
-            return Ok(user);
+                response.IsSuccess = true;
+                response.Data = user;
+                response.StatusCode = StatusCodes.Status200OK;
+            }
+            catch (NotFoundException ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+                response.StatusCode = StatusCodes.Status204NoContent;
+            }
+            return Ok(response);
         }
 
         [HttpPost]
@@ -57,10 +61,17 @@ namespace UserMorph.Api.Controllers
         {
             var validationResult = _userValidator.Validate(user);
 
-            if (validationResult.IsValid)
+            if (!validationResult.IsValid)
             {
+                var errorResponse = new ApiResponse<List<string>>();
+                errorResponse.StatusCode = StatusCodes.Status400BadRequest;
+                errorResponse.IsSuccess = false;
+                errorResponse.Data = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
 
+                return BadRequest(errorResponse);
             }
+
+            _service.CreateUser(user);
 
             return CreatedAtAction(nameof(GetUserById), "Users", new { id = user.Id }, null);
         }
@@ -68,20 +79,42 @@ namespace UserMorph.Api.Controllers
         [HttpPut]
         public IActionResult UpdateUser(User user) 
         {
-            var domainUser = users.Find(x => x.Id == user.Id);
+            var validationResult = _userValidator.Validate(user);
+            if (!validationResult.IsValid) 
+            {
+                var errorResponse = new ApiResponse<List<string>>();
+                errorResponse.StatusCode = StatusCodes.Status400BadRequest;
+                errorResponse.IsSuccess = false;
+                errorResponse.Data = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
 
-            domainUser.FirstName = user.FirstName;
+                return BadRequest(errorResponse);
+            }
+
+            _service.UpdateUser(user);  
 
             return NoContent();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteUser(int id) 
         {
-            var userIndex = users.FindIndex(x => x.Id == id);
+            var response = new ApiResponse<User>();
+            try
+            {
+                _service.DeleteUser(id);
 
-            users.RemoveAt(userIndex);
+                response.IsSuccess = true;
+                response.StatusCode = StatusCodes.Status200OK;
+            }
+            catch (NotFoundException ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+                response.StatusCode = StatusCodes.Status404NotFound;
 
+                return BadRequest(response);
+            }
+            
             return NoContent();
         }
     }

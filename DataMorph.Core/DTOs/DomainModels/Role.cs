@@ -6,6 +6,5 @@ namespace UserMorph.Core.DTOs.DomainModels
     {
         public UserRole RoleId { get; set; }
         public int UserId { get; set; }
-        public String Name { get; set; }
     }
 }

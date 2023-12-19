@@ -1,5 +1,6 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using UserMorph.Api.Middlewares;
 using UserMorph.Core.DTOs.DomainModels;
 using UserMorph.Core.Interfaces.Domain;
 using UserMorph.Core.Interfaces.Persistence;
@@ -31,13 +32,24 @@ namespace UserMorph.Api
 
             // Validators 
             builder.Services.AddScoped<IValidator<User>, UserValidator>();
-
+            builder.Services.AddTransient<GlobalExceptionHandler>();
 
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("cors-policy", policyBuilder =>
+                {
+                    policyBuilder
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowAnyOrigin();
+                });
+            });
 
             var app = builder.Build();
 
@@ -52,6 +64,9 @@ namespace UserMorph.Api
 
             app.UseAuthorization();
 
+            app.UseCors("cors-policy");
+
+            app.UseMiddleware<GlobalExceptionHandler>();
 
             app.MapControllers();
 
