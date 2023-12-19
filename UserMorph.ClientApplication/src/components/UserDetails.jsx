@@ -52,7 +52,7 @@ export default function () {
 
     const updateData = () => {
         axios.put(`/users`, userData).then(response => {
-            console.log('e: ', response);
+            alert('Save successful');
         })
         .catch(err => {
             const errText = err.response.data.data.join(',');
@@ -62,7 +62,6 @@ export default function () {
 
     const deleteUser = () => {
         
-
         axios.delete(`/users/${userData.id}`).then(() => {
             navigate('/users');
         })
