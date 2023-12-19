@@ -1,5 +1,6 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using UserMorph.Api.Middlewares;
 using UserMorph.Core.DTOs.DomainModels;
 using UserMorph.Core.Interfaces.Domain;
 using UserMorph.Core.Interfaces.Persistence;
@@ -31,7 +32,7 @@ namespace UserMorph.Api
 
             // Validators 
             builder.Services.AddScoped<IValidator<User>, UserValidator>();
-
+            builder.Services.AddTransient<GlobalExceptionHandler>();
 
 
             builder.Services.AddControllers();
@@ -52,7 +53,6 @@ namespace UserMorph.Api
 
             var app = builder.Build();
 
-
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -64,9 +64,11 @@ namespace UserMorph.Api
 
             app.UseAuthorization();
 
-            app.MapControllers();
-
             app.UseCors("cors-policy");
+
+            app.UseMiddleware<GlobalExceptionHandler>();
+
+            app.MapControllers();
 
             app.Run();
         }

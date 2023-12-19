@@ -14,8 +14,8 @@ export default function () {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`/users/${userId}?dataSourceType=${dataSourceType}`);
-                console.log('user: ', response.data);
-                setUserData(response.data);
+                console.log('user: ', response.data.data);
+                setUserData(response.data.data);
 
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -51,14 +51,19 @@ export default function () {
     };
 
     const updateData = () => {
-        axios.put(`/users`, userData);
+        axios.put(`/users`, userData).then(response => {
+            console.log('e: ', response);
+        })
+        .catch(err => {
+            const errText = err.response.data.data.join(',');
+            alert(errText);
+        })
     }
 
     const deleteUser = () => {
         
 
         axios.delete(`/users/${userData.id}`).then(() => {
-            console.log('delete success');
             navigate('/users');
         })
         .catch(err => {

@@ -20,11 +20,23 @@ export default function () {
 
     const fetchUsers = () => {
         console.log('dataSource: ', dataProvider, searchText);
-        axios.get(`/users?dataSourceType=${dataProvider}&searchText=${Boolean(searchText) ? searchText : 'all'}`)
+        axios.get(`/users?dataSourceType=${dataProvider}&searchText=${Boolean(searchText) ? searchText : '~'}`)
             .then(response => {
-                console.log('data: ', response.data);
-                setUsers(response.data);
-            });
+                if (response.data.isSuccess) {
+                    setUsers(response.data.data);
+                }
+                else {
+                    alert(response.data.message);
+                }
+            }).catch(err => {
+                alert(err.response.data.detail);
+            })
+    }
+
+    const sexIntToString = (sex) => {
+        if (sex == 0) return 'Male';
+        if (sex == 1) return 'Female';
+        return 'Others';
     }
 
     return (
@@ -72,7 +84,7 @@ export default function () {
                                 <td scope="row">{user.id}</td>
                                 <td>{`${user.firstName} ${user.lastName}`}</td>
                                 <td>{user.company}</td>
-                                <td>{user.sex}</td>
+                                <td>{sexIntToString(user.sex)}</td>
                                 <td>
                                     <Link to={`${editUrl}edit/${user.id}?dataSourceType=${dataProvider}`}>Edit</Link>
                                 </td>

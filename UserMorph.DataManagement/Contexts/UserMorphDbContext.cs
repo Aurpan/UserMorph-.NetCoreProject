@@ -19,7 +19,7 @@ namespace UserMorph.DataManagement.Contexts
         {
             modelBuilder
                 .ApplyConfiguration(new UserConfiguration())
-                .ApplyConfiguration(new UserConfiguration())
+                .ApplyConfiguration(new UserContactConfiguration())
                 .ApplyConfiguration(new RoleConfiguration());
 
             base.OnModelCreating(modelBuilder);

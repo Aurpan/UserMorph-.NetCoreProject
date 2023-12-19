@@ -12,12 +12,12 @@ namespace UserMorph.DataManagement.Repositories
             _context = dbContext;
         }
 
-        public IEnumerable<User> GetUsers()
+        public IEnumerable<User>? GetUsers()
         {
             return _context.Set<User>();
         }
 
-        public User GetUserDetailsByID(int id)
+        public User? GetUserDetailsByID(int id)
         {
             var userDetails = _context.Set<User>()
                 .Where(u => u.Id == id)

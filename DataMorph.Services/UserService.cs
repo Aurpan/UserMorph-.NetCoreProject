@@ -1,4 +1,5 @@
-﻿using UserMorph.Core.DTOs.DomainModels;
+﻿using UserMorph.Core.ApplicationExceptions;
+using UserMorph.Core.DTOs.DomainModels;
 using UserMorph.Core.Enums;
 using UserMorph.Core.Interfaces.Domain;
 
@@ -18,7 +19,12 @@ namespace UserMorph.Services
             var userQuery = _repositoryFactory.GetUserRepository(sourceType)
                 .GetUsers();
 
-            if (!string.IsNullOrEmpty(searchText) && searchText != "all")
+            if (userQuery == null)
+            {
+                return Enumerable.Empty<User>();
+            }
+
+            if (!string.IsNullOrEmpty(searchText) && searchText != "~")
             {
                 userQuery = userQuery
                     .Where(u => 
@@ -33,10 +39,15 @@ namespace UserMorph.Services
             return filteredResult;
         } 
 
-
         public User GetUserDetailsById(int id, DataSourceType sourceType)
         {
-            var userPersistence = _repositoryFactory.GetUserRepository(sourceType).GetUserDetailsByID(id);
+            var userPersistence = _repositoryFactory.GetUserRepository(sourceType)
+                .GetUserDetailsByID(id);
+
+            if (userPersistence is null)
+            {
+                throw new NotFoundException($"User with id = {id} not found!");
+            }
 
             return MapToUserDetailDomainModel(userPersistence);
         }
@@ -45,48 +56,74 @@ namespace UserMorph.Services
         public void UpdateUser(User user) 
         {
             var users = _repositoryFactory.GetUserRepository(DataSourceType.Json)
-                .GetUsers()
-                .ToList();
+                .GetUsers();
 
-            
-            int index = users.FindIndex(u => u.Id == user.Id);
-            users[index] = MapToUserDetailPersistenceModel(user);
+            if (users is null)
+            {
+                throw new NotFoundException($"No user found!");
+            }
+
+            var userList = users.ToList();
+
+            int index = userList.FindIndex(u => u.Id == user.Id);
+
+            if (index == -1)
+            {
+                throw new NotFoundException($"User with id = {user.Id} not found!");
+            }
+
+            userList[index] = MapToUserDetailPersistenceModel(user);
 
             var jsonRepository = ((Core.Interfaces.Persistence.IUserJsonRepository)_repositoryFactory
                 .GetUserRepository(DataSourceType.Json));
             
-            jsonRepository.UpdateUser(users);
+            jsonRepository.UpdateJsonDb(userList);
 
         }
 
 
         public void DeleteUser(int userId) 
         {
-            var users = _repositoryFactory.GetUserRepository(DataSourceType.Json)
-                .GetUsers()
-                .ToList();
+            var allUsers = _repositoryFactory.GetUserRepository(DataSourceType.Json)
+                .GetUsers();
 
-            int index = users.FindIndex(u => u.Id == userId);
-            users.RemoveAt(index);
+            if (allUsers is null)
+            {
+                throw new NotFoundException($"No user found!");
+            }
+
+            var userList = allUsers.ToList();
+            int index = userList.FindIndex(u => u.Id == userId);
+
+            if (index == -1)
+            {
+                throw new NotFoundException($"User with id = {userId} not found!");
+            }
+
+            userList.RemoveAt(index);
 
             var jsonRepository = ((Core.Interfaces.Persistence.IUserJsonRepository)_repositoryFactory
                 .GetUserRepository(DataSourceType.Json));
 
-            jsonRepository.DeleteUser(users);
+            jsonRepository.UpdateJsonDb(userList);
         }
 
         public void CreateUser(User user)
         {
             var users = _repositoryFactory.GetUserRepository(DataSourceType.Json)
-            .GetUsers()
-                .ToList();
+                .GetUsers();
 
-            users.Add(MapToUserDetailPersistenceModel(user));
+            if (users is null)
+            {
+                throw new NotFoundException($"No user found!");
+            }
+
+            users.ToList().Add(MapToUserDetailPersistenceModel(user));
 
             var jsonRepository = ((Core.Interfaces.Persistence.IUserJsonRepository)_repositoryFactory
                 .GetUserRepository(DataSourceType.Json));
 
-            jsonRepository.UpdateUser(users);
+            jsonRepository.UpdateJsonDb(users.ToList());
         }
 
 
