@@ -1,5 +1,5 @@
 # Project- User Morph
-This project contains basic CRUD operation on user data.
+This project contains basic CRUD operations using .NET Core api and React as frontend.
 
 ## How to run the **API** project
 - Download the repository and switch to '**develop**' branch
